@@ -8,4 +8,5 @@ class Ventana(Frame):
         self.create_widgets()
 
     def create_widgets(self):
-        pass
+        frame1 = Frame(self, bg="#bfdaff")
+        frame1.place(x=0,y=0,width=93, height=259)
