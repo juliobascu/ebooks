@@ -1,12 +1,11 @@
-from tkinter import *
-from ventana import *
+from BD.conexion import *
 
-def main():
-    root = Tk()
-    root.wm_title("ebooks")
-    app = Ventana(root)
-    app.mainloop()
-
-
-if __name__ == "__main__":
-    main()
+def menu():
+    print("""
+    =================MENU PRINCIPAL===================
+    |   1.- Listar Libros       2.- Registrar Libros |
+    |   3.- Actualizar Libro    4.- Eliminar Libro   |
+    |   5.- Salir                                    |
+    ==================================================
+    """)
+    
