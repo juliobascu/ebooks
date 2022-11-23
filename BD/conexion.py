@@ -2,16 +2,16 @@ import mysql.connector
 from mysql.connector import Error
 
 
-class DAO():
+class DAO():#cambiar a clase LIBRO
 
     def __init__(self):
         try:
             self.conexion = mysql.connector.connect(
                 host='localhost',
                 port=3306,
-                user='jbascunan',
+                user='root',
                 password='Isabellabascu1409',
-                db='pruebapy'
+                db='ebooks'
             )
         except Error as ex:
             print("Error al intentar la conexión: {0}".format(ex))
@@ -48,12 +48,12 @@ class DAO():
             except Error as ex:
                 print("Error al intentar la conexión: {0}".format(ex))
 
-    def eliminarLibro(self, codigoLibroEliminar):
+    def eliminarLibro(self, codigoEliminar):
         if self.conexion.is_connected():
             try:
                 cursor = self.conexion.cursor()
                 sql = "DELETE FROM libros WHERE codigo = '{0}'"
-                cursor.execute(sql.format(codigoLibroEliminar))
+                cursor.execute(sql.format(codigoEliminar))
                 self.conexion.commit()
                 print("¡Libro eliminado!\n")
             except Error as ex:
