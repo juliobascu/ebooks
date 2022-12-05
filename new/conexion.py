@@ -25,6 +25,24 @@ class Conexion:
         except Error as e:
             print(e)
 
+    def editar(self, sql):
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute(sql)
+            self.connection.commit()
+            self.close()
+        except Error as e:
+            print(e)
+
+    def borrar(self,sql):
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute(sql)
+            self.connection.commit()
+            self.close()
+        except Error as e:
+            print(e)
+
     def list(self, sql):
         cursor = self.connection.cursor()
         cursor.execute(sql)
