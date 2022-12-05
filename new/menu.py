@@ -5,7 +5,6 @@ from getpass import getpass
 from conexion import Conexion
 
 
-
 class Menu:
     
     def __init__():
@@ -97,12 +96,13 @@ class Menu:
                 os.system('cls')
                 Libro.list_all()
                 idlibro=input("Ingrese el ID del libro que quiere COMPRAR : ")
-                db = Conexion()
-                sql = f"SELECT stock FROM libros WHERE id = {idlibro};"
-                db.list(sql)
-                print(sql)
+                Libro.stockview(idlibro)
+                
+                
                 input("presion ENTER para continuar...")
 
+            elif op == "2":
+                pass
 
 
     def menu0():

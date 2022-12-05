@@ -16,6 +16,11 @@ class Libro:
         db = Conexion()
         db.ieb(sql)
 
+    def insertcarro(self):
+        sql = f'INSERT INTO carrito (codigo,nombre,autor,fecha_pub,precio,stock) VALUES ({self.codigo},"{self.nombre}","{self.autor}","{self.fecha_pub}",{self.precio},{self.stock})'
+        db = Conexion()
+        db.ieb(sql)
+
     def editar(self):
         sql = f'UPDATE `biblioteca`.`libros`SET`id` = {self.idlibro},`codigo` = {self.codigo},`nombre` = "{self.nombre}",`autor` = "{self.autor}",`fecha_pub` = "{self.fecha_pub}",`precio` = {self.precio} WHERE `id` = {self.idlibro};'
         db = Conexion()
@@ -35,4 +40,9 @@ class Libro:
         sql = f'UPDATE `biblioteca`.`libros` SET `stock` = "{self.stock}" WHERE ( `id` = {idlibro} ) ;'
         db = Conexion()
         db.ieb(sql)
+
+    def stockview(idlibro):
+        sql = f'SELECT stock FROM biblioteca.libros WHERE id = {idlibro};'
+        db = Conexion()
+        db.list(sql)
     
