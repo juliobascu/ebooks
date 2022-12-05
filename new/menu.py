@@ -1,8 +1,13 @@
 from libro import Libro
 import os
+import login
+from getpass import getpass
+from conexion import Conexion
+
+
 
 class Menu:
-
+    
     def __init__():
         os.system('cls')
         print("Seleccione una opcion ...")
@@ -10,12 +15,20 @@ class Menu:
         print("2 para agregar un libro")
         print("3 para editar un libro")
         print("4 para borrar un libro")
+        print("5 para agregar STOCK a un libro")
         print("0 para salir del sistema")
 
         valor = int(input("...\n"))
 
         if valor == 0:
-            print("Adios ...")
+            print("""
+            ██████╗ ██╗   ██╗███████╗    ██████╗ ██╗   ██╗███████╗
+            ██╔══██╗╚██╗ ██╔╝██╔════╝    ██╔══██╗╚██╗ ██╔╝██╔════╝
+            ██████╔╝ ╚████╔╝ █████╗      ██████╔╝ ╚████╔╝ █████╗  
+            ██╔══██╗  ╚██╔╝  ██╔══╝      ██╔══██╗  ╚██╔╝  ██╔══╝  
+            ██████╔╝   ██║   ███████╗    ██████╔╝   ██║   ███████╗
+            ╚═════╝    ╚═╝   ╚══════╝    ╚═════╝    ╚═╝   ╚══════╝
+            """)
             os._exit()
         elif valor == 1:
             os.system('cls')
@@ -56,19 +69,81 @@ class Menu:
             idlibro=input("Ingrese el ID del libro que quiere BORRAR : ")
             Libro.borrar(idlibro)
             print("Libro borrado exitosamente! \n")
+
+        elif valor == 5:
+            os.system("cls")
+            print("Solicitando datos de libros ...\n")
+            Libro.list_all()
+            idlibro=input("Ingrese el ID del libro que quiere editar STOCK : ")
+            stock=input("Ingrese cantidad real de STOCK : ")
+            libro=Libro("","","","","",idlibro,stock)
+            libro.cantidad(idlibro)
+            print("Libro guardado exitosamente! \n")
+
         else:
             print("No se reconoce el comando ... :s")
             Menu.__init__()
-    
-    def post_listar_libros():
-        print("Ingrese el id del libro a modificar")
-        print("Ingrese 0 para salir de la app")
-        value = input("\n")
-        if value == 0:
-            print("Adios..")
-        else:
-            print(f'se va a modificar el libro con id {value}...')
+
+    def musuario():
+        while True:
+            os.system('cls')
+            print("""
+            ======================MENU=USUARIO===================
+            | 1.-Comprar Libros       2.-Ver Carrito de Compras |
+            =====================================================
+            """)
+            op=input("Ingrese una opcion: ")
+            if op=="1":
+                os.system('cls')
+                Libro.list_all()
+                idlibro=input("Ingrese el ID del libro que quiere COMPRAR : ")
+                db = Conexion()
+                sql = f"SELECT stock FROM libros WHERE id = {idlibro};"
+                db.list(sql)
+                print(sql)
+                input("presion ENTER para continuar...")
+
+
+
+    def menu0():
+        print("""
+         ███████████   ███                                                       ███      █████                          ██████████ █████                       █████             
+        ░░███░░░░░███ ░░░                                                       ░░░      ░░███                          ░░███░░░░░█░░███                       ░░███              
+         ░███    ░███ ████   ██████  ████████   █████ █████  ██████  ████████   ████   ███████   ██████      ██████      ░███  █ ░  ░███████   ██████   ██████  ░███ █████  █████ 
+         ░██████████ ░░███  ███░░███░░███░░███ ░░███ ░░███  ███░░███░░███░░███ ░░███  ███░░███  ███░░███    ░░░░░███     ░██████    ░███░░███ ███░░███ ███░░███ ░███░░███  ███░░  
+         ░███░░░░░███ ░███ ░███████  ░███ ░███  ░███  ░███ ░███████  ░███ ░███  ░███ ░███ ░███ ░███ ░███     ███████     ░███░░█    ░███ ░███░███ ░███░███ ░███ ░██████░  ░░█████ 
+         ░███    ░███ ░███ ░███░░░   ░███ ░███  ░░███ ███  ░███░░░   ░███ ░███  ░███ ░███ ░███ ░███ ░███    ███░░███     ░███ ░   █ ░███ ░███░███ ░███░███ ░███ ░███░░███  ░░░░███
+         ███████████  █████░░██████  ████ █████  ░░█████   ░░██████  ████ █████ █████░░████████░░██████    ░░████████    ██████████ ████████ ░░██████ ░░██████  ████ █████ ██████ 
+        ░░░░░░░░░░░  ░░░░░  ░░░░░░  ░░░░ ░░░░░    ░░░░░     ░░░░░░  ░░░░ ░░░░░ ░░░░░  ░░░░░░░░  ░░░░░░      ░░░░░░░░    ░░░░░░░░░░ ░░░░░░░░   ░░░░░░   ░░░░░░  ░░░░ ░░░░░ ░░░░░░  
+        
+        
+        ================MENU=PRINCIPAL==================
+        | 1.-Usuario Comprador    2.-Administrador     |
+        ================================================
+        """)
+        op=input("Seleccione una opcion: ")
+        if op == "1":
+            os.system('cls')
+            login.Login.contraseña = "Isabellabascu1409"
+            Menu.musuario()
+        elif op == "2":
+            login.Login.contraseña=getpass("Ingrese contraseña de SQL: ")
+            if login.Login.contraseña == "Isabellabascu1409":
+                login.Login.menuadmin=True
+                while login.Login.menuadmin:
+                    Menu.__init__()
+                    input("presione ENTER para continuar...")
+                
+
+            else:
+                print("ERROR de contraseña...")
             
-while True:
-    Menu.__init__()
+            
+        else:
+            print("ERROR seleccione 1 o 2 solamente...")
+
+            
+while login.Login.menu0:
+    os.system("cls")
+    Menu.menu0()
     input("presione ENTER para continuar......")

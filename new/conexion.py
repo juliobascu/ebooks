@@ -1,6 +1,6 @@
 from getpass import getpass
 from mysql.connector import connect, Error
-
+import login
 class Conexion:
 
     def __init__(self):
@@ -8,7 +8,7 @@ class Conexion:
             aux = connect(
                 host='localhost',
                 user='root',
-                password= "Isabellabascu1409",#getpass("Ingrese password de SQL"),
+                password=login.Login.contraseña,
                 database='biblioteca'
             )
             self.connection = aux
@@ -16,25 +16,7 @@ class Conexion:
         except Error as e:
             print("Eror ",e)
 
-    def insert(self, sql):
-        try:
-            cursor = self.connection.cursor()
-            cursor.execute(sql)
-            self.connection.commit()
-            self.close()
-        except Error as e:
-            print(e)
-
-    def editar(self, sql):
-        try:
-            cursor = self.connection.cursor()
-            cursor.execute(sql)
-            self.connection.commit()
-            self.close()
-        except Error as e:
-            print(e)
-
-    def borrar(self,sql):
+    def ieb(self, sql):
         try:
             cursor = self.connection.cursor()
             cursor.execute(sql)
@@ -50,11 +32,6 @@ class Conexion:
         for registro in resultado:
             print(registro)
         self.close()
-
-    
-    def getById(self, pk):
-        cursor = self.connection.cursor()
-        cursor.execute
 
     def close(self):
         self.connection.close()
