@@ -9,15 +9,17 @@ class Menu:
     
     def __init__():
         os.system('cls')
-        print("Seleccione una opcion ...")
-        print("1 para listar los libros.. ")
-        print("2 para agregar un libro")
-        print("3 para editar un libro")
-        print("4 para borrar un libro")
-        print("5 para agregar STOCK a un libro")
-        print("0 para salir del sistema")
+        print("""
+        ===============MENU==ADMINISTRADOR===============
+        | 1.-Listar Libros        2.-Agregar Libro      |
+        | 3.-Editar Libro         4.-Borrar Libro       |
+        | 0.-Salir                                      |
+        =================================================
+        
+        """)
+        
 
-        valor = int(input("...\n"))
+        valor = int(input("Ingresa una opcion...\n"))
 
         if valor == 0:
             print("""
@@ -43,7 +45,8 @@ class Menu:
             autor = input("Ingrese el autor del libro ")
             fecha_pub = input("Ingrese fecha de publicacion del libro ")
             precio = int(input("Ingrese el precio del libro "))
-            libro=Libro(codigo,nombre,autor,fecha_pub,precio,"")
+            stock = int(input("Ingrese el stock del libro "))
+            libro=Libro(codigo,nombre,autor,fecha_pub,precio,"",stock)
             libro.insertar()
             print("Libro guardado exitosamente! \n")
 
@@ -57,7 +60,8 @@ class Menu:
             autor = input("Ingrese el autor del libro ")
             fecha_pub = input("Ingrese fecha de publicacion del libro ")
             precio = int(input("Ingrese el precio del libro "))
-            libro=Libro(codigo,nombre,autor,fecha_pub,precio,idlibro)
+            stock = int(input("Ingrese el stock del libro "))
+            libro=Libro(codigo,nombre,autor,fecha_pub,precio,idlibro,stock)
             libro.editar()
             print("Libro guardado exitosamente! \n")
 
@@ -87,9 +91,9 @@ class Menu:
         while True:
             os.system('cls')
             print("""
-            ======================MENU=USUARIO===================
-            | 1.-Comprar Libros       2.-Ver Carrito de Compras |
-            =====================================================
+            ======================MENU=USUARIO====================================================
+            | 1.-Comprar Libros       2.-Ver Carrito de Compras     3.-Borrar Carrito    4.-Salir|
+            ======================================================================================
             """)
             op=input("Ingrese una opcion: ")
             if op=="1":
@@ -97,12 +101,29 @@ class Menu:
                 Libro.list_all()
                 idlibro=input("Ingrese el ID del libro que quiere COMPRAR : ")
                 Libro.stockview(idlibro)
+                stocks=login.Login.stock
                 
-                
+                if stocks <= 0:
+                    print("No queda suficiente stock de ese libro...")
+                else:
+                    Libro.insertcarro1(idlibro)
+                    Libro.insertcarro2(idlibro)               
+                    print("Libro agregado correctamente al carrito")
                 input("presion ENTER para continuar...")
 
             elif op == "2":
-                pass
+                os.system("cls")
+                Libro.list_carrito()
+                input("presione ENTER para continuar...")
+
+            elif op == "3":
+                os.system("cls")
+                Libro.borrarcarro()
+                input("Carrito borrado presione ENTER para continuar...")
+
+            elif op == "4":
+                os.system("cls")
+                os._exit()
 
 
     def menu0():
@@ -125,6 +146,8 @@ class Menu:
         if op == "1":
             os.system('cls')
             login.Login.contraseña = "Isabellabascu1409"
+            nombreusu=input("Ingrese su nombre de Usuario: ")
+            Libro.insertarusuario(nombreusu)
             Menu.musuario()
         elif op == "2":
             login.Login.contraseña=getpass("Ingrese contraseña de SQL: ")
